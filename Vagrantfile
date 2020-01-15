@@ -17,8 +17,8 @@ servers = [
         :box => "ubuntu/xenial64",
         :box_version => "20180831.0.0",
         :eth1 => "192.168.205.11",
-        :mem => "2048",
-        :cpu => "2"
+        :mem => "512",
+        :cpu => "1"
     },
     {
         :name => "k8s-node-2",
@@ -26,8 +26,8 @@ servers = [
         :box => "ubuntu/xenial64",
         :box_version => "20180831.0.0",
         :eth1 => "192.168.205.12",
-        :mem => "2048",
-        :cpu => "2"
+        :mem => "512",
+        :cpu => "1"
     }
 ]
 
@@ -64,7 +64,7 @@ EOF
     # ip of this box
     IP_ADDR=`ifconfig enp0s8 | grep Mask | awk '{print $2}'| cut -f2 -d:`
     # set node-ip
-    sudo sed -i "/^[^$]*KUBELET_EXTRA_ARGS/c\Environment=KUBELET_EXTRA_ARGS=--node-ip=$IP_ADDR" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+    sudo echo "Environment=\"KUBELET_EXTRA_ARGS=--node-ip=$IP_ADDR\"" >> /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
     sudo systemctl restart kubelet
 SCRIPT
 

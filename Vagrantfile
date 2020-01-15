@@ -64,7 +64,7 @@ EOF
     # ip of this box
     IP_ADDR=`ifconfig enp0s8 | grep Mask | awk '{print $2}'| cut -f2 -d:`
     # set node-ip
-    sudo sed -i "/^[^#]*KUBELET_EXTRA_ARGS=/c\KUBELET_EXTRA_ARGS=--node-ip=$IP_ADDR" /etc/default/kubelet
+    sudo sed -i "/^[^$]*KUBELET_EXTRA_ARGS/c\Environment=KUBELET_EXTRA_ARGS=--node-ip=$IP_ADDR" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
     sudo systemctl restart kubelet
 SCRIPT
 
@@ -84,8 +84,7 @@ $configureMaster = <<-SCRIPT
 
     # install Calico pod network addon
     export KUBECONFIG=/etc/kubernetes/admin.conf
-    kubectl apply -f https://raw.githubusercontent.com/ecomm-integration-ballerina/kubernetes-cluster/master/calico/rbac-kdd.yaml
-    kubectl apply -f https://raw.githubusercontent.com/ecomm-integration-ballerina/kubernetes-cluster/master/calico/calico.yaml
+    kubectl apply -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml
 
     kubeadm token create --print-join-command >> /etc/kubeadm_join_cmd.sh
     chmod +x /etc/kubeadm_join_cmd.sh
@@ -137,4 +136,4 @@ Vagrant.configure("2") do |config|
 
     end
 
-end 
+end

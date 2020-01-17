@@ -4,7 +4,7 @@ A vagrant script for setting up a Kubernetes cluster using Kubeadm
 ## Pre-requisites
 
  * **[Vagrant 2.1.4+](https://www.vagrantup.com)**
- * **[Virtualbox 5.2.18+](https://www.virtualbox.org)**
+ * **[Virtualbox <= 6.0.x](https://www.virtualbox.org)**
 
 ## How to Run
 
@@ -32,7 +32,7 @@ servers = [
 ]
  ```
 
-As you can see above, you can also configure IP address, memory and CPU in the servers array. 
+As you can see above, you can also configure IP address, memory and CPU in the servers array.
 
 ## Clean-up
 
